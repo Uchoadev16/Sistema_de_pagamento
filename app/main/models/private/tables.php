@@ -1,6 +1,6 @@
 <?php
-return [
+return $table = [
     'sist_pagamento' => [
-        1 => 'usuario'
+        1 => 'usuarios'
     ]
 ];

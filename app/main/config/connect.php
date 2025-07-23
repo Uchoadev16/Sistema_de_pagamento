@@ -9,23 +9,28 @@ class connect
     }
     function connect_database()
     {
+        if (file_exists('../models/private/config.php')) {
+
+            require("../models/private/config.php");
+        } else {
+            require("../../models/private/config.php");
+        }
         try {
             //banco no localhost
-            $host = require("../models/private/config.php")['local']['sist_pagamento']['host'];
-            $database = require("../models/private/config.php")['local']['sist_pagamento']['banco'];
-            $user = require("../models/private/config.php")['local']['sist_pagamento']['user'];
-            $password = require("../models/private/config.php")['local']['sist_pagamento']['senha'];
+            $host = $config['local']['sist_pagamento']['host'];
+            $database = $config['local']['sist_pagamento']['banco'];
+            $user = $config['local']['sist_pagamento']['user'];
+            $password = $config['local']['sist_pagamento']['senha'];
 
             $this->connect = new PDO('mysql:host=' . $host . ';dbname=' . $database, $user, $password);
 
             if (!$this->connect) {
                 //banco no hostinger
-                $host = require("../models/private/config.php")['hospedagem']['sist_pagamento']['host'];
-                $database = require("../models/private/config.php")['hospedagem']['sist_pagamento']['banco'];
-                $user = require("../models/private/config.php")['hospedagem']['sist_pagamento']['user'];
-                $password = require("../models/private/config.php")['hospedagem']['sist_pagamento']['senha'];
+                $host = $config['hospedagem']['sist_pagamento']['host'];
+                $database = $config['hospedagem']['sist_pagamento']['banco'];
+                $user = $config['hospedagem']['sist_pagamento']['user'];
+                $password = $config['hospedagem']['sist_pagamento']['senha'];
                 $this->connect = new PDO('mysql:host=' . $host . ';dbname=' . $database, $user, $password);
-                
             }
         } catch (PDOException $e) {
 

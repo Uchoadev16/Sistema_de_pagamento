@@ -10,41 +10,11 @@ class usuario extends connect
     function __construct()
     {
         parent::__construct();
-        $this->tabela1 = require ('./private/tables.php')['sist_pagamento'][1];
+        require('private/tables.php');
+        $this->tabela1 = $table['sist_pagamento'][1];
     }
 
     //metodos 
-    public function login(string $email, string $senha): int
-    {
-        try {
-            $stmt = $this->connect->prepare("SELECT * FROM $this->tabela1 WHERE email = :email");
-            $stmt->bindValue(':email', $email);
-            $stmt->execute();
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($user) {
-                if (password_verify($senha, $user['senha'])) {
-
-                    if (session_status() === PHP_SESSION_NONE) {
-                        session_start();
-                    }
-                    $_SESSION['id'] = $user['id'];
-                    $_SESSION['nome'] = $user['nome'];
-                    $_SESSION['email'] = $user['email'];
-                    return 1;
-                } else {
-                    return 2;
-                }
-            } else {
-
-                return 3;
-            }
-        } catch (PDOException $e) {
-
-            header('location: ../views/faltalErro.php');
-            exit();
-        }
-    }
-
     public function cadastrar(string $nome, string $email, string $telefone, string $senha): int
     {
         try {
@@ -68,7 +38,51 @@ class usuario extends connect
                 return 2;
             }
         } catch (PDOException $e) {
-            header('location: ../views/faltalErro.php');
+            header('location: ../views/windows/faltalErro.php');
+            exit();
+        }
+    }
+
+    public function login(string $email, string $senha): int
+    {
+        try {
+            $stmt_check = $this->connect->prepare("SELECT * FROM $this->tabela1 WHERE email = :email");
+            $stmt_check->bindValue(':email', $email);
+            $stmt_check->execute();
+            $user = $stmt_check->fetch(PDO::FETCH_ASSOC);
+            if ($user) {
+                if (password_verify($senha, $user['senha'])) {
+
+                    if ($user['ativo'] == 1) {
+
+                        return 5;
+                    } else {
+
+                        $stmt_ativo = $this->connect->prepare("UPDATE `usuarios` SET `ativo`= 1 WHERE id = :id");
+                        $stmt_ativo->bindValue(':id', $user['id']);
+                        if ($stmt_ativo->execute()) {
+
+                            if (session_status() === PHP_SESSION_NONE) {
+                                session_start();
+                            }
+                            $_SESSION['id'] = $user['id'];
+                            $_SESSION['nome'] = $user['nome'];
+                            $_SESSION['email'] = $user['email'];
+                            return 1;
+                        } else {
+                            return 2;
+                        }
+                    }
+                } else {
+                    return 4;
+                }
+            } else {
+
+                return 3;
+            }
+        } catch (PDOException $e) {
+
+            header('location: ../views/windows/faltalErro.php');
             exit();
         }
     }

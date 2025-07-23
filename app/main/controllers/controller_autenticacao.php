@@ -1,32 +1,5 @@
 <?php
-require_once '../models/model.usuario.php';
-print_r($_POST);
-//login
-if (
-    isset($_POST['email']) && !empty($_POST['email']) && is_string($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)
-    && isset($_POST['senha']) && !empty($_POST['senha']) && is_string($_POST['senha'])
-) {
-
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-
-    $usuario = new Usuario();
-    $result = $usuario->login($email, $senha);
-    switch ($result) {
-        case 1:
-            header('Location: ../views/start.php');
-            exit();
-        case 2:
-            header('Location: ../views/login.php?erro=1');
-            exit();
-        case 3:
-            header('Location: ../views/login.php?erro=2');
-            exit();
-        default:
-            header('Location: ../index.php');
-            exit();
-    }
-}
+require_once('../models/model.usuario.php');
 
 //cadastro
 if (
@@ -45,7 +18,7 @@ if (
     $result = $usuario->cadastrar($nome, $email, $telefone, $senha);
     switch ($result) {
         case 1:
-            header('Location: ../views/login.php?sucesso');
+            header('Location: ../views/auth/login.php?sucesso');
             exit();
         case 2:
             header('Location: ../views/auth/cadastro.php?erro');
@@ -59,5 +32,39 @@ if (
     }
 }
 
-header('location:../index.php?parametros_invalidos');
-exit();
+//login
+else if (
+    isset($_POST['email']) && !empty($_POST['email']) && is_string($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)
+    && isset($_POST['senha']) && !empty($_POST['senha']) && is_string($_POST['senha'])
+) {
+
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+
+    $usuario = new Usuario();
+    $result = $usuario->login($email, $senha);
+    switch ($result) {
+        case 1:
+            header('Location: ../views/inicio.php');
+            exit();
+        case 2:
+            header('Location: ../views/auth/login.php?erro');
+            exit();
+        case 3:
+            header('Location: ../views/auth/login.php?erro_email');
+            exit();
+        case 4:
+            header('Location: ../views/auth/login.php?erro_senha');
+            exit();
+        case 5:
+            header('Location: ../views/auth/login.php?erro_ativo');
+            exit();
+        default:
+            header('Location: ../index.php');
+            exit();
+    }
+} else {
+
+    header('location:../index.php?parametros_invalidos');
+    exit();
+}

@@ -1,5 +1,5 @@
 <?php
-return [
+return $config = [
     "local" => [
         "sist_pagamento" => [
             "host" => "localhost",

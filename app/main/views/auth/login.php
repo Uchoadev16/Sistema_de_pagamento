@@ -9,7 +9,7 @@
 <body class="bg-gray-900 font-sans text-gray-200 min-h-screen flex items-center justify-center">
     <div class="container mx-auto px-4 py-8 max-w-md">
         <h1 class="text-3xl sm:text-4xl font-bold text-yellow-400 text-center mb-8">Login</h1>
-        <form action="controllers/controller_autenticacao.php" method="post" class="bg-gray-800 rounded-lg shadow-lg p-6 sm:p-8">
+        <form action="../../controllers/controller_autenticacao.php" method="post" class="bg-gray-800 rounded-lg shadow-lg p-6 sm:p-8">
             <div class="mb-4">
                 <label for="email" class="block text-gray-300 mb-2 text-sm sm:text-base">E-mail</label>
                 <input type="email" name="email" id="email" required placeholder="seu@email.com" class="w-full p-3 rounded bg-gray-700 text-gray-200 border border-gray-600 focus:outline-none focus:border-yellow-400">
