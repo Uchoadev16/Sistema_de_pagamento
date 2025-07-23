@@ -11,8 +11,8 @@
         <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold">Banco Ouro</div>
             <ul class="flex flex-col sm:flex-row sm:space-x-6 space-y-2 sm:space-y-0">
-                <li><a href="./main/views/auth/login.php" class="hover:text-yellow-300 transition duration-300">Login</a></li>
-                <li><a href="./main/views/auth/cadastro.php" class="hover:text-yellow-300 transition duration-300">Cadastra-se</a></li>
+                <li><a href="./views/auth/login.php" class="hover:text-yellow-300 transition duration-300">Login</a></li>
+                <li><a href="./views/auth/cadastro.php" class="hover:text-yellow-300 transition duration-300">Cadastra-se</a></li>
             </ul>
         </nav>
     </header>
