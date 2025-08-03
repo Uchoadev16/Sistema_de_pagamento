@@ -34,7 +34,7 @@ class connect
             }
         } catch (PDOException $e) {
 
-            header('location: ../views/desconnect.php');
+            header('location: ../views/windows/desconnect.php');
             exit();
         }
     }

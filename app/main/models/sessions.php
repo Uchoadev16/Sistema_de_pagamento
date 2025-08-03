@@ -1,11 +1,11 @@
 <?php
-require_once('../../../local_files.php');
-require_once(CONNECT);
-
-if(session_start() == PHP_SESSION_NONE){
-
-    session_start();
+if(file_exists('../config/connect.php')){
+    require_once('../config/connect.php');
+}else{
+    require_once('../../config/connect.php');
 }
+
+session_start();
 
 class sessions extends connect
 {
